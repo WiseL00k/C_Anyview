@@ -921,6 +921,220 @@ int main(int a, int b, long int c)
 }
 ```
 
+## 第8章
+
+### CP08EX011
+
+```c
+#include "allinclude.h"  //DO NOT edit this line
+void func(char s[], char t[], int n) 
+/* 数组s的前n个元素存放给定的字符序列，
+   数组t的前n个元素存放s的逆序列。
+   注意：数组的下标从0开始。
+*/
+{ // Add your code here
+   for(int i = 0; i < n; i++)
+   {
+      t[i] = s[n-i-1];
+   }
+
+}
+```
+
+### CP08EX012
+
+```c
+#include "allinclude.h"  //DO NOT edit this line
+void func(char *s, char *t) 
+/* s是给定字符串的起始地址，
+   t是求得s的逆串的起始地址
+*/
+{  // Add your code here
+   int length = 0;
+   for(length = 0; s[length] != '\0'; length++);
+   for(int i = 0; i < length; i++)
+   {
+      t[length-1-i] = s[i];
+   }
+}
+```
+
+### CP08EX015
+
+```c
+#include "allinclude.h"  //DO NOT edit this line
+#include <algorithm>
+void func(char *s1, char *s2, int n)
+/* s1为字符串的起始地址，s2为新字符串的起始地址，n为字符串的长度。
+   要求：s1串不能发生改变；请用s2串存放新的字符串。
+*/
+{  // Add your code here
+   for(int i = 0; i < n; i++)
+   {
+      s2[i] = s1[i];
+   }
+   if(n > 2)
+   {
+      sort(s2+1,s2+n-1,greater<char>());
+   }
+}
+```
+
+### CP08EX016
+
+```c
+#include "allinclude.h"  //DO NOT edit this line
+#include <algorithm>
+void func(char *s1, char *s2)
+{  // Add your code here
+    int n = 0;
+    for(int i = 0; s1[i] != '\0'; i++)
+    {
+        s2[i] = s1[i];
+        n++;
+    }
+    if(n > 2)
+    {
+        sort(s2+1,s2+n-1,greater<char>());
+    }
+
+}
+```
+
+### CP08EX018
+
+```c
+#include "allinclude.h"  //DO NOT edit this line
+#include <algorithm>
+void sub_str(char *s, int m, char *t)
+{  
+    int n = 0, i = 0, j = 0;
+    *t = '\0';
+    for(int i = 0; s[i] != '\0'; i++)
+        n++;
+
+    for(i = m,j = 0; s[i] != '\0'; i++,j++)
+    {
+        t[j] = s[i];
+    }
+    t[j] = '\0';
+    if(m < n)
+        sort(t,t+j);
+}
+```
+
+### CP08EX020
+
+```c
+#include "allinclude.h"  //DO NOT edit this line
+char *match(char *s, char c) // 返回字符c在串s中首次出现的位置指针
+{  // Add your code here
+   while(*s != '\0')
+   {
+      if(*s == c)
+         return s;
+      s++;
+   }
+
+   return NULL;
+}
+```
+
+### CP08EX033
+
+```c
+#include "allinclude.h"  //DO NOT edit this line
+int month_day(int year, int yearday, int *pmonth, int *pday) 
+{  // Add your code here
+    if(year <= 0)
+        return 0;
+    *pmonth = 1;
+    *pday = 0;
+    int monthDays[13] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+    if((year % 4 == 0 and year % 100 != 0) or (year % 400 == 0))
+    {
+        if(yearday <= 0 || yearday > 366)
+            return 0;
+        monthDays[2] = 29;
+    }
+    else {
+        if(yearday <= 0 || yearday > 365)
+            return 0;
+    }
+    for(int i = 1; i <= 12; i++)
+    {
+        if(yearday <= monthDays[i])
+        {
+            *pday = yearday;
+            break;
+        }
+        yearday -= monthDays[i];
+        (*pmonth)++;
+    }
+    return 1;
+}
+```
+
+### CP08EX044
+
+```c
+#include "allinclude.h"  //DO NOT edit this line
+long func(char *s) 
+{ // s是一个数字字符串；函数返回值为由s含有的数字字符转换得到的数
+  // Add your code here
+  long num = 0;
+  int firstFlag = false, firstNumFlag = false;
+  for(int i = 0; s[i] != '\0'; i++)
+  {
+    if(s[i] == '-' && !firstNumFlag)
+      firstFlag = true;
+    if(s[i] >= '0' && s[i] <= '9')
+    {
+      firstNumFlag = true;
+      num *= 10;
+      num += s[i]-'0';
+    }
+  }
+  if(firstFlag)
+    num *= -1;
+  return num;
+}
+```
+
+### CP08EX105
+
+```c
+#include "allinclude.h"  //DO NOT edit this line
+int findmax(int s[], int n) 
+/* 返回s中的n个整数的最大值。注意：要求在函数中采用指针（而不是下标）来处理数组元素。
+*/
+{  // Add your code here
+    int max = 0;
+    for(int i = 0; i < n; i++)
+    {
+        if(max < *(s+i))
+            max = *(s+i);
+    }
+    return max;
+}
+```
+
+### CP08EX124
+
+```c
+#include "allinclude.h"  //DO NOT edit this line
+int min3adj(int s[], int n) // 返回数组s中相邻三个数的和中的最小值。
+{  // Add your code here
+    int sum = s[0]+s[1]+s[2];
+    for(int i = 1; i < n-1; i++)
+    {
+        if(sum > s[i-1] + s[i] + s[i+1])
+            sum = s[i-1] + s[i] + s[i+1];
+    }
+    return sum;
+}
+```
+
 
 
 ## 未完待续...
